@@ -19,7 +19,6 @@ public class ResourceExceptionHandler {
         standardError.setError("Resource not found");
         standardError.setMessage(exception.getMessage());
         standardError.setPath(request.getRequestURI());
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(standardError);
     }
 }
