@@ -86,6 +86,10 @@ public class Product implements Serializable {
         return date;
     }
 
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
     public void setDate(Instant date) {
         this.date = date;
     }
