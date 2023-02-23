@@ -1,7 +1,10 @@
 package com.devfactor.dscatalog.services;
 
+import com.devfactor.dscatalog.dto.CategoryDTO;
 import com.devfactor.dscatalog.dto.ProductDTO;
+import com.devfactor.dscatalog.entities.Category;
 import com.devfactor.dscatalog.entities.Product;
+import com.devfactor.dscatalog.repositories.CategoryRepository;
 import com.devfactor.dscatalog.repositories.ProductRepository;
 import com.devfactor.dscatalog.services.exceptions.ResourceDatabaseIntegrityException;
 import com.devfactor.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -20,6 +23,8 @@ import java.util.Optional;
 public class ProductServices {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
@@ -37,16 +42,16 @@ public class ProductServices {
     @Transactional
     public ProductDTO save(ProductDTO productDTO) {
         Product product = new Product();
-        //product.setName(productDTO.getName());
+        copyDTOtoEntity(productDTO, product);
         Product loadedProduct = productRepository.save(product);
-        return new ProductDTO(loadedProduct);
+        return new ProductDTO(loadedProduct, loadedProduct.getCategories());
     }
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO productDTO) {
         try {
             Product product = productRepository.getOne(id);
-            //product.setName(productDTO.getName());
+            copyDTOtoEntity(productDTO, product);
             product = productRepository.save(product);
             return new ProductDTO(product);
         } catch (EntityNotFoundException exception) {
@@ -61,6 +66,19 @@ public class ProductServices {
             throw new ResourceNotFoundException("ID not found " + id);
         } catch (DataIntegrityViolationException exception) {
             throw new ResourceDatabaseIntegrityException("Integrity violation");
+        }
+    }
+
+    public void copyDTOtoEntity(ProductDTO productDTO, Product product){
+        product.setName(productDTO.getName());
+        product.setDate(productDTO.getDate());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setImgUrl(productDTO.getImgUrl());
+        product.getCategories().clear();
+        for(CategoryDTO categoryDTO : productDTO.getCategories()){
+            Category category = categoryRepository.getOne(categoryDTO.getId());
+            product.getCategories().add(category);
         }
     }
 }
