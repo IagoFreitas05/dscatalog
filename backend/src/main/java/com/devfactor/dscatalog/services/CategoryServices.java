@@ -3,8 +3,11 @@ package com.devfactor.dscatalog.services;
 import com.devfactor.dscatalog.dto.CategoryDTO;
 import com.devfactor.dscatalog.entities.Category;
 import com.devfactor.dscatalog.repositories.CategoryRepository;
+import com.devfactor.dscatalog.services.exceptions.ResourceDatabaseIntegrityException;
 import com.devfactor.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +55,16 @@ public class CategoryServices {
         }
         catch (EntityNotFoundException exception){
             throw new ResourceNotFoundException("ID not found " + id);
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            categoryRepository.deleteById(id);
+        }catch (EmptyResultDataAccessException exception){
+            throw new ResourceNotFoundException("ID not found "+ id);
+        }catch (DataIntegrityViolationException exception){
+            throw new ResourceDatabaseIntegrityException("Integrity violation");
         }
     }
 }
