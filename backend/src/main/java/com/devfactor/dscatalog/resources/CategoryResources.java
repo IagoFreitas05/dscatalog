@@ -38,7 +38,7 @@ public class CategoryResources {
                 .buildAndExpand(categoryDTO.getId())
                 .toUri();
 
-        return ResponseEntity.ok().body(categoryDTO);
+        return ResponseEntity.created(uri).body(categoryDTO);
     }
 
 }
