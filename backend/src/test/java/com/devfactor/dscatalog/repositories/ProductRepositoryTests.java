@@ -33,4 +33,9 @@ public class ProductRepositoryTests {
            productRepository.deleteById(nonExistingId);
         });
     }
+
+    @Test
+    public void saveShouldPersistWithAutoIncrementWhenIdIsNull(){
+
+    }
 }
