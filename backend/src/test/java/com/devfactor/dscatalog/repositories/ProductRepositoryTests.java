@@ -1,6 +1,7 @@
 package com.devfactor.dscatalog.repositories;
 
 import com.devfactor.dscatalog.entities.Product;
+import com.devfactor.dscatalog.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,12 @@ public class ProductRepositoryTests {
     private ProductRepository productRepository;
     private Long existingId;
     private Long nonExistingId;
+    private Long countTotalProducts;
     @BeforeEach
     void setUp(){
         existingId = 1L;
         nonExistingId = 0L;
+        countTotalProducts = 25L;
     }
     @Test
     public void deleteShouldDeleteObjectWhenIdExists(){
@@ -36,6 +39,10 @@ public class ProductRepositoryTests {
 
     @Test
     public void saveShouldPersistWithAutoIncrementWhenIdIsNull(){
-
+        Product product = Factory.createProduct();
+        product.setId(null);
+        product = productRepository.save(product);
+        Assertions.assertNotNull(product.getId());
+        Assertions.assertEquals(product.getId(), 26);
     }
 }
