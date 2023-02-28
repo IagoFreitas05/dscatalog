@@ -28,7 +28,7 @@ build
 !/**/src/**/bin
 !/**/src/**/build
 build.log
-backend/target
+/backend/target
 dependency-reduced-pom.xml
 dump.rdb
 interpolated*.xml
