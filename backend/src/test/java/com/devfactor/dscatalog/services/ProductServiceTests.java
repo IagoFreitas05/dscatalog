@@ -71,6 +71,7 @@ public class ProductServiceTests {
 
         Mockito.verify(productRepository).deleteById(existingId);
     }
+
     @Test
     public void deleteShouldThrowResourceNotFoundExceptionWhenNonExistingId(){
         Assertions.assertThrows(ResourceNotFoundException.class ,() -> {

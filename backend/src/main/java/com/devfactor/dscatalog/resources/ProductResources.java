@@ -45,7 +45,7 @@ public class ProductResources {
         productDTO = productServices.update(id, productDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(productDTO.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(productDTO);
+        return ResponseEntity.status(200).body(productDTO);
     }
 
     @DeleteMapping(value = "/{id}")
