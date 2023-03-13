@@ -34,6 +34,8 @@ public class ProductResourcesTests {
     }
     @Test
     public void findAllShoulReturnPage() throws Exception{
-        mockMvc.perform(get("/product")).andExpect(status().isOk());
+        mockMvc
+                .perform(get("/product"))
+                .andExpect(status().isOk());
     }
 }
