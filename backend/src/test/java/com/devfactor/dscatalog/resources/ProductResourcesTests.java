@@ -58,7 +58,7 @@ public class ProductResourcesTests {
     }
 
     @Test
-    public void saveShouldReturnProductDto() throws  Exception {
+    public void saveShouldReturnProductDto() throws Exception {
         String json = mapper.writeValueAsString(productDTO);
         mockMvc
                 .perform(post("/product")
@@ -67,20 +67,24 @@ public class ProductResourcesTests {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
     }
+
     @Test
-    public void deleteShouldReturnNoContentWhenIdExists() throws  Exception {
+    public void deleteShouldReturnNoContentWhenIdExists() throws Exception {
         mockMvc
                 .perform(delete("/product/{id}", existingId)).andExpect(status().isNoContent());
     }
+
     @Test
     public void deleteShouldReturnNotFoundWhenIdNotExists() throws Exception {
         mockMvc
                 .perform(delete("/product/{id}", nonExistingId)).andExpect(status().isNotFound());
     }
+
     @Test
     public void deleteshouldReturnBadRequestWhenIdIsAssociate() throws Exception {
         mockMvc.perform(delete("/product/{id}", associatedId)).andExpect(status().isBadRequest());
     }
+
     @Test
     public void updateShouldReturnProductDtoWhenIdExists() throws Exception {
         String jsonBody = mapper.writeValueAsString(productDTO);
@@ -126,6 +130,5 @@ public class ProductResourcesTests {
     public void findByIdShouldReturnResourceNotFoundWhenIdNotExists() throws Exception {
         ResultActions result = mockMvc.perform(get("/product/{id}", nonExistingId).accept(MediaType.APPLICATION_JSON));
         result.andExpect(status().isNotFound());
-
     }
 }

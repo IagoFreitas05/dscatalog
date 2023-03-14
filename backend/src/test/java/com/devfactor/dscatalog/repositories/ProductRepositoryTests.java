@@ -18,39 +18,45 @@ public class ProductRepositoryTests {
     private Long existingId;
     private Long nonExistingId;
     private Long countTotalProducts;
+
     @BeforeEach
-    void setUp(){
+    void setUp() {
         existingId = 1L;
         nonExistingId = 0L;
         countTotalProducts = 25L;
     }
+
     @Test
-    public void deleteShouldDeleteObjectWhenIdExists(){
+    public void deleteShouldDeleteObjectWhenIdExists() {
         productRepository.deleteById(existingId);
         Optional<Product> result = productRepository.findById(existingId);
         Assertions.assertFalse(result.isPresent());
     }
+
     @Test
-    public void deleteShouldThrowEmptyResultNotFoundExceptionWhenIdDoesNotExists(){
-        Assertions.assertThrows(EmptyResultDataAccessException.class, ()->{
-           productRepository.deleteById(nonExistingId);
+    public void deleteShouldThrowEmptyResultNotFoundExceptionWhenIdDoesNotExists() {
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            productRepository.deleteById(nonExistingId);
         });
     }
+
     @Test
-    public void saveShouldPersistWithAutoIncrementWhenIdIsNull(){
+    public void saveShouldPersistWithAutoIncrementWhenIdIsNull() {
         Product product = Factory.createProduct();
         product.setId(null);
         product = productRepository.save(product);
         Assertions.assertNotNull(product.getId());
         Assertions.assertEquals(product.getId(), 26);
     }
+
     @Test
-    public void findByIdShouldReturnEmptyOptionalWhenIdDoesNotExists(){
+    public void findByIdShouldReturnEmptyOptionalWhenIdDoesNotExists() {
         Optional<Product> product = productRepository.findById(nonExistingId);
         Assertions.assertTrue(product.isEmpty());
     }
+
     @Test
-    public void findByIdShouldReturnOptionalProductWhenIdExists(){
+    public void findByIdShouldReturnOptionalProductWhenIdExists() {
         Optional<Product> product = productRepository.findById(existingId);
         Assertions.assertTrue(product.isPresent());
     }

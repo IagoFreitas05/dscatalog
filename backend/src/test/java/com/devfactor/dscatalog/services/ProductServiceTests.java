@@ -43,8 +43,9 @@ public class ProductServiceTests {
     private Product product;
     private ProductDTO productDTO;
     private Category category;
+
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         existingId = 1L;
         nonExistingId = 0L;
         depentedId = 4L;
@@ -63,8 +64,9 @@ public class ProductServiceTests {
         Mockito.doThrow(ResourceNotFoundException.class).when(productRepository).deleteById(nonExistingId);
         Mockito.doThrow(DataIntegrityViolationException.class).when(productRepository).deleteById(depentedId);
     }
+
     @Test
-    public void deleteShouldDoNothingWhenIdExists(){
+    public void deleteShouldDoNothingWhenIdExists() {
         Assertions.assertDoesNotThrow(() -> {
             productServices.delete(existingId);
         });
@@ -73,45 +75,49 @@ public class ProductServiceTests {
     }
 
     @Test
-    public void deleteShouldThrowResourceNotFoundExceptionWhenNonExistingId(){
-        Assertions.assertThrows(ResourceNotFoundException.class ,() -> {
+    public void deleteShouldThrowResourceNotFoundExceptionWhenNonExistingId() {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             productServices.delete(nonExistingId);
         });
     }
+
     @Test
-    public void deleteShouldThrowResourceDatabaseIntegrityException(){
-        Assertions.assertThrows(ResourceDatabaseIntegrityException.class, ()->{
+    public void deleteShouldThrowResourceDatabaseIntegrityException() {
+        Assertions.assertThrows(ResourceDatabaseIntegrityException.class, () -> {
             productServices.delete(depentedId);
         });
     }
+
     @Test
-    public void findAllPagedShouldReturnPage(){
-        Pageable pageable = PageRequest.of(0,10);
+    public void findAllPagedShouldReturnPage() {
+        Pageable pageable = PageRequest.of(0, 10);
         Page<ProductDTO> result = productServices.findAllPaged(pageable);
         Assertions.assertNotNull(result);
         Mockito.verify(productRepository, Mockito.times(1)).findAll(pageable);
     }
+
     @Test
-    public void findByIdshouldReturnProductDtoWhenIdExists(){
+    public void findByIdshouldReturnProductDtoWhenIdExists() {
         ProductDTO productDTO = productServices.findById(existingId);
         Assertions.assertNotNull(productDTO);
     }
 
     @Test
-    public void findByIdShouldReturnResourceNotFoundExceptionWhenIdNotExists(){
-        Assertions.assertThrows(ResourceNotFoundException.class, ()->{
+    public void findByIdShouldReturnResourceNotFoundExceptionWhenIdNotExists() {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             productServices.findById(nonExistingId);
         });
     }
+
     @Test
-    public void updateShuldReturnProductDTOWhenIdExists(){
-         ProductDTO productDTOreturn = productServices.update(existingId, productDTO);
-         Assertions.assertNotNull(productDTOreturn);
+    public void updateShuldReturnProductDTOWhenIdExists() {
+        ProductDTO productDTOreturn = productServices.update(existingId, productDTO);
+        Assertions.assertNotNull(productDTOreturn);
     }
 
     @Test
-    public void updateShouldReturnResourceNotFoundeExceptionWhenIdNotExists(){
-        Assertions.assertThrows(ResourceNotFoundException.class, ()->{
+    public void updateShouldReturnResourceNotFoundeExceptionWhenIdNotExists() {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             productServices.update(nonExistingId, productDTO);
         });
     }

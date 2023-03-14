@@ -21,11 +21,12 @@ public class Factory {
         return product;
     }
 
-    public static ProductDTO createProductDTO(){
+    public static ProductDTO createProductDTO() {
         Product product = createProduct();
         return new ProductDTO(product, product.getCategories());
     }
-    public static Category createCategory(){
+
+    public static Category createCategory() {
         return new Category(1l, "Teste");
     }
 }
