@@ -55,7 +55,7 @@ public class ProductServices {
             Product product = productRepository.getOne(id);
             copyDTOtoEntity(productDTO, product);
             product = productRepository.save(product);
-            return new ProductDTO(product);
+            return new ProductDTO(product, product.getCategories());
         } catch (EntityNotFoundException exception) {
             throw new ResourceNotFoundException("ID not found " + id);
         }
