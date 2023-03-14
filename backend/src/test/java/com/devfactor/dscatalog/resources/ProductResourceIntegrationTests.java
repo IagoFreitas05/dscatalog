@@ -47,36 +47,4 @@ public class ProductResourceIntegrationTests {
                 .andExpect(jsonPath("$.content").exists())
                 .andExpect(jsonPath("$.content[0].name").value("Macbook Pro"));
     }
-
-  /*  @Test
-    public void updateShouldReturnProductDtoWhenIdExists() throws Exception {
-        ProductDTO productDTO = Factory.createProductDTO();
-        String jsonBody = mapper.writeValueAsString(productDTO);
-
-        String expectedName = productDTO.getName();
-        String expectedDescription = productDTO.getDescription();
-
-        mockMvc
-                .perform(put("/product/{id}", existingId)
-                        .content(jsonBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(existingId))
-                .andExpect(jsonPath("$.name").value(expectedName))
-                .andExpect(jsonPath("$.description").value(expectedDescription));
-    }
-
-    @Test
-    public void updateShouldReturnNotFoundWhenIdNotExists() throws Exception {
-        ProductDTO productDTO = Factory.createProductDTO();
-        String jsonBody = mapper.writeValueAsString(productDTO);
-
-        mockMvc
-                .perform(put("/product/{id}", nonExistingId)
-                        .content(jsonBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }*/
 }
