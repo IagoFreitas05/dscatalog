@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -32,7 +33,7 @@ public class UserResources {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> save(@RequestBody UserInsertDTO userDTO) {
+    public ResponseEntity<UserDTO> save(@Valid @RequestBody UserInsertDTO userDTO) {
         UserDTO userDTOPersisted =userServices.save(userDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userDTOPersisted.getId()).toUri();
 
