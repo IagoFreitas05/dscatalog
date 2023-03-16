@@ -35,9 +35,8 @@ public class UserResources {
 
     @PostMapping
     public ResponseEntity<UserDTO> save(@Valid @RequestBody UserInsertDTO userDTO) {
-        UserDTO userDTOPersisted =userServices.save(userDTO);
+        UserDTO userDTOPersisted = userServices.save(userDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userDTOPersisted.getId()).toUri();
-
         return ResponseEntity.created(uri).body(userDTOPersisted);
     }
 
@@ -52,6 +51,4 @@ public class UserResources {
         userServices.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }
