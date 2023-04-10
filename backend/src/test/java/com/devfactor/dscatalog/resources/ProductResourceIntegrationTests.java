@@ -2,6 +2,7 @@ package com.devfactor.dscatalog.resources;
 
 import com.devfactor.dscatalog.dto.ProductDTO;
 import com.devfactor.dscatalog.tests.Factory;
+import com.devfactor.dscatalog.tests.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 public class ProductResourceIntegrationTests {
+
+    @Autowired
+    private TokenUtil tokenUtil;
     @Autowired
     private MockMvc mockMvc;
     private Long existingId;
