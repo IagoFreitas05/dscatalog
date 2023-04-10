@@ -22,8 +22,10 @@ public class ProductResources {
     ProductServices productServices;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
-        Page<ProductDTO> list = productServices.findAllPaged(pageable);
+    public ResponseEntity<Page<ProductDTO>> findAll(
+            Pageable pageable,
+            @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId) {
+        Page<ProductDTO> list = productServices.findAllPaged(pageable, categoryId);
         return ResponseEntity.ok().body(list);
     }
 
@@ -54,6 +56,4 @@ public class ProductResources {
         productServices.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }
