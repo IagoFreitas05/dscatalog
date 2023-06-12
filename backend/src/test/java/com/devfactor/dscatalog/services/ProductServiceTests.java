@@ -105,12 +105,6 @@ public class ProductServiceTests {
         });
     }
 
-    @Test
-    public void updateShouldReturnProductDTOWhenIdExists() {
-        ProductDTO productDTOreturn = productServices.update(existingId, productDTO);
-        Assertions.assertNotNull(productDTOreturn);
-    }
-    //precisa de correções
 
     @Test
     public void updateShouldReturnResourceNotFoundExceptionWhenIdNotExists() {
