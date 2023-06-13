@@ -3,7 +3,7 @@ name: MainToHomolog
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -68,4 +68,4 @@ jobs:
         run:  aws elasticbeanstalk update-environment --application-name $EB_APP --environment-name "$EB_ENV" --version-label "$EB_VERSION"
         working-directory: backend
 
-      - run: echo "done main to homolog"
+      - run: echo "done main to homolog"x§x§
