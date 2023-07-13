@@ -71,7 +71,7 @@ public class ProductResourcesTests {
     @Test
     public void saveShouldReturnProductDto() throws Exception {
         String accessToken = tokenUtil.obtainAccessToken(mockMvc, username, password);
-        String json = mapper.writeValueAsString(productDTO);
+            String json = mapper.writeValueAsString(productDTO);
         mockMvc
                 .perform(post("/product")
                         .content(json)
